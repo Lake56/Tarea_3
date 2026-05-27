@@ -3,7 +3,7 @@ package backend;
 /**
  * clase super 8 que es subclase de Dulce
  */
-class Super8 extends Dulce {
+public class Super8 extends Dulce {
     /**
      * Crea un dulce de clase super8 con su serie
      * @param serie del super 8

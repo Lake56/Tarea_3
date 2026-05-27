@@ -3,7 +3,7 @@ package backend;
 /**
  * comprador que paga por el producto de un expendedor, recibe el vuelto y prueba el sabor
  */
-class Comprador {
+public class Comprador {
     private String sabor;
     private int vuelto;
     /**

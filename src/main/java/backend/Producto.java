@@ -4,7 +4,7 @@ package backend;
  * se define la clase abstracta Producto
  * que servira como base de variables y metodos para las demas sub clases de esta
  */
-abstract class Producto {
+public abstract class Producto {
     private int serie;
     /**
      * Se crea un producto su numero de serie

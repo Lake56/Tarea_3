@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * Se crea la clase deposito, que sera un arraylist generico para todos los productos
  * @param <T> se utiliza para validar el tipo de datos que contendra el arraylist
  */
-class Deposito<T> {
+public class Deposito<T> {
     private ArrayList<T> lista;
 
     /**

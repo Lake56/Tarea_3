@@ -3,7 +3,7 @@ package backend;
 /**
  * Moneda de $100, subclase de Moneda
  */
-class Moneda100 extends Moneda {
+public class Moneda100 extends Moneda {
     public Moneda100() {
         super();
     }

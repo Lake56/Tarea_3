@@ -4,7 +4,7 @@ package backend;
  * expendedor de bebidas y dulces
  * hace el proceso de compra, pago y devolucion de dinero
  */
-class Expendedor {
+public class Expendedor {
     private Deposito<Producto> depositoCoca;
     private Deposito<Producto> depositoSprite;
     private Deposito<Producto> depositoFanta;

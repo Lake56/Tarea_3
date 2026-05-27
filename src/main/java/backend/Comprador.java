@@ -18,12 +18,16 @@ class Comprador {
             vuelto = 0;
             sabor = null;
 
-            Producto p = exp.comprarProducto(m, tipo);
-            sabor = p.Sabor();
-        Moneda moneda;
-        while ((moneda = exp.getVuelto()) != null) {
-            vuelto += moneda.getValor();
-        }
+            try {
+                Producto p = exp.comprarProducto(m, tipo);
+                sabor = p.Sabor();
+            }
+            finally {
+                Moneda moneda;
+                while ((moneda = exp.getVuelto()) != null) {
+                    vuelto += moneda.getValor();
+                }
+            }
     }
      /**
       * retorna el total del vuelto

@@ -34,8 +34,7 @@ public class Moneda {
 
             if(url != null) {
                 ImageIcon icon = new ImageIcon(url);
-                this.imagen = icon.getImage();
-            }
+                this.imagen = icon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);            }
             else {
                 System.out.print("Java no ha encontrado el archivo " + ruta);
             }
@@ -46,7 +45,7 @@ public class Moneda {
 
     public void paintComponent(Graphics g) {
         if(imagen != null) {
-            g.drawImage(imagen, x, y, 40, 40, null);
+            g.drawImage(imagen, x, y, null);
         }
         else {
             g.setColor(Color.YELLOW);

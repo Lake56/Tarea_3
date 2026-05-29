@@ -8,7 +8,7 @@ public class Ventana extends JFrame {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.setSize(800,  600);
+        this.setSize(900,  700);
 
         this.setLocationRelativeTo(null);
 

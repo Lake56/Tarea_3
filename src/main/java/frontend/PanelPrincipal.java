@@ -9,7 +9,7 @@ public class PanelPrincipal extends JPanel {
     private PanelComprador comprador;
 
     public PanelPrincipal() {
-        this.comprador = new PanelComprador(450, 20, 300, 530);
+        this.comprador = new PanelComprador(570, 20, 300, 630);
 
         this.addMouseListener(new MouseAdapter() {
             @Override

@@ -27,7 +27,16 @@ public class Boton {
         g.drawRect(x, y,  ancho, alto);
 
         g.setColor(Color.WHITE);
-        g.drawString(texto, x + 30, y + (alto / 2) + 5);
+
+        FontMetrics metrics = g.getFontMetrics();
+
+        int anchoTexto = metrics.stringWidth(texto);
+        int altoTexto = metrics.getAscent();
+
+        int centroX = this.x + (this.ancho - anchoTexto) / 2;
+        int centroY = this.y + (this.alto + altoTexto) / 2;
+
+        g.drawString(texto, centroX, centroY);
     }
 
     public boolean contiene(int ejeX, int ejeY) {

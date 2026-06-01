@@ -2,6 +2,8 @@ package backend;
 
 import java.util.Scanner;
 
+import static backend.Expendedor.Contador;
+
 public class MainInteractivo {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in); // Inicializar Scanner
@@ -85,13 +87,16 @@ public class MainInteractivo {
         // Se selecciona la moneda correspondiente al usuario
         switch(seleccionMon) {
             case "1":
-                moneda = new Moneda100();
+                moneda = new Moneda100(Contador);
+                Contador+=1;
                 break;
             case "2":
-                moneda = new Moneda500();
+                moneda = new Moneda500(Contador);
+                Contador+=1;
                 break;
             case "3":
-                moneda = new Moneda1000();
+                moneda = new Moneda1000(Contador);
+                Contador+=1;
                 break;
             default:
                 System.out.println("Moneda invalida");

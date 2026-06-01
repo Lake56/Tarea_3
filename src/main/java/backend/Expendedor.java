@@ -11,6 +11,9 @@ public class Expendedor {
     private Deposito<Producto> depositoSnickers;
     private Deposito<Producto> depositoSuper8;
     private Deposito<Moneda> depositoVuelto;
+    private Deposito<Moneda> depositoCompra;
+    private Producto RetiroProducto;
+    public static int Contador;
     /**
      * crea los expendedores y llena a todos con la misma cantidad
      * @param numProductos cantidad de productos para cada tipo
@@ -22,14 +25,19 @@ public class Expendedor {
         depositoSnickers = new Deposito<Producto>();
         depositoSuper8 = new Deposito<Producto>();
         depositoVuelto = new Deposito<Moneda>();
-
-        //se llenan todos magicamente x igual
-        for (int i = 0; i < numProductos; i++) {
-            depositoCoca.add(new CocaCola(i));
-            depositoSprite.add(new Sprite(i));
-            depositoFanta.add(new Fanta(i));
-            depositoSnickers.add(new Snickers(i));
-            depositoSuper8.add(new Super8(i));
+        depositoCompra= new Deposito<Moneda>();
+        Contador=1;
+        //se llenan todos magicamente por igual
+        for (int i = 0; i < numProductos; i++){
+            depositoCoca.add(new CocaCola(i+Contador));
+            Contador+=1;
+            depositoSprite.add(new Sprite(i+Contador));
+            Contador+=1;
+            depositoFanta.add(new Fanta(i+Contador));
+            Contador+=1;
+            depositoSnickers.add(new Snickers(i+Contador));
+            Contador+=1;
+            depositoSuper8.add(new Super8(i+Contador));
         }
     }
 
@@ -60,12 +68,11 @@ public class Expendedor {
      * accion de comprar un producto de el expendedor
      * @param m  moneda con la que paga
      * @param cualProducto el identificador del producto
-     * @return producto comprado
      * @throws PagoIncorrectoException si moneda es null
      * @throws NoHayProductoException si el deposito esta vacio
      * @throws PagoInsuficienteException si la moneda es menor al precio del producto
      */
-    public Producto comprarProducto(Moneda m, tipoProduct cualProducto)
+    public void comprarProducto(Moneda m, tipoProduct cualProducto)
             throws PagoIncorrectoException, NoHayProductoException, PagoInsuficienteException {
 
         // Verificar en caso que la moneda sea nula
@@ -94,15 +101,29 @@ public class Expendedor {
             depositoVuelto.add(m); // Devolvemos la moneda en caso que no haya stock
             throw new NoHayProductoException("No hay producto en el deposito.");
         }
-
-        // Calcular el vuelto con monedas de a 100
+        depositoCompra.add(m);
+        // Calcular el vuelto con monedas de a 1000, 500 y 100
         int diferencia = m.getValor() - cualProducto.getPrecio();
-        while (diferencia >= 100) {
-            depositoVuelto.add(new Moneda100());
-            diferencia -= 100;
+        while (diferencia >= 100){
+            if(diferencia>=1000) {
+                depositoVuelto.add(new Moneda1000(Contador));
+                diferencia -= 1000;
+            }
+            else if(diferencia>=500) {
+                depositoVuelto.add(new Moneda500(Contador));
+                diferencia -= 500;
+            }
+            else if(diferencia>=100) {
+                depositoVuelto.add(new Moneda100(Contador));
+                diferencia -= 100;
+            }
+            Contador+=1;
         }
 
-        return p;
+        RetiroProducto =p;
+    }
+    public Producto getProducto(){
+        return (RetiroProducto);
     }
     /**
      * retorna una moneda de vuelto por llamada

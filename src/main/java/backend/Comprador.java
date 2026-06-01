@@ -19,7 +19,8 @@ public class Comprador {
             sabor = null;
 
             try {
-                Producto p = exp.comprarProducto(m, tipo);
+                exp.comprarProducto(m, tipo);
+                Producto p= exp.getProducto();
                 sabor = p.Sabor();
             }
             finally {

@@ -5,16 +5,17 @@ package backend;
  * implementa Comparable para ordenar por sus valores
  */
 public abstract class Moneda implements Comparable<Moneda>{
-    /**
-     * crea una moneda
-     */
     private int serie;
+    /**
+     * crea una moneda con su numero de serie
+     * @param serie asociada a la moneda
+     */
     public Moneda(int serie){
         this.serie=serie;
     }
     /**
-     * retorna un numero de serie para la moneda
-     * @return this
+     * retorna el numero de serie para la moneda
+     * @return serie
      */
     public int getSerie() {
         return serie;

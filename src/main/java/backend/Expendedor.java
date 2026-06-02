@@ -16,6 +16,7 @@ public class Expendedor {
     public static int Contador;
     /**
      * crea los expendedores y llena a todos con la misma cantidad
+     * Contador es usado para la serializacion unica de cada producto y moneda
      * @param numProductos cantidad de productos para cada tipo
      */
     public Expendedor(int numProductos) {
@@ -27,7 +28,9 @@ public class Expendedor {
         depositoVuelto = new Deposito<Moneda>();
         depositoCompra= new Deposito<Moneda>();
         Contador=1;
-        //se llenan todos magicamente por igual
+        /**se llenan todos magicamente por igual
+        * se suma uno al contador para que cada uno tenga una serie distinta
+        */
         for (int i = 0; i < numProductos; i++){
             depositoCoca.add(new CocaCola(i+Contador));
             Contador+=1;
@@ -66,6 +69,7 @@ public class Expendedor {
     }
     /**
      * accion de comprar un producto de el expendedor
+     * El producto se guarda en el contenedor para su retiro
      * @param m  moneda con la que paga
      * @param cualProducto el identificador del producto
      * @throws PagoIncorrectoException si moneda es null
@@ -101,6 +105,7 @@ public class Expendedor {
             depositoVuelto.add(m); // Devolvemos la moneda en caso que no haya stock
             throw new NoHayProductoException("No hay producto en el deposito.");
         }
+        // Se añade el dinero al deposito
         depositoCompra.add(m);
         // Calcular el vuelto con monedas de a 1000, 500 y 100
         int diferencia = m.getValor() - cualProducto.getPrecio();
@@ -122,6 +127,11 @@ public class Expendedor {
 
         RetiroProducto =p;
     }
+
+    /**
+     * *Retorna el Producto seleccionado
+     * @return RetiroProducto
+     */
     public Producto getProducto(){
         return (RetiroProducto);
     }

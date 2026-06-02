@@ -4,10 +4,18 @@ package backend;
  * Moneda de $500, subclase de Moneda
  */
 public class Moneda500 extends Moneda {
+    /**
+     * Se crea la Moneda de 500 con su numero de serie
+     * @param serie
+     */
     public Moneda500(int serie) {
         super(serie);
     }
 
+    /**
+     * Retorna el numero de serie de la Moneda
+     * @return serie
+     * */
     @Override
     public int getSerie() {
         return super.getSerie();

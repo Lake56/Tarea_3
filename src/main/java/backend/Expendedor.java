@@ -111,18 +111,17 @@ public class Expendedor {
         int diferencia = m.getValor() - cualProducto.getPrecio();
         while (diferencia >= 100){
             if(diferencia>=1000) {
-                depositoVuelto.add(new Moneda1000(Contador));
+                depositoVuelto.add(new Moneda1000());
                 diferencia -= 1000;
             }
             else if(diferencia>=500) {
-                depositoVuelto.add(new Moneda500(Contador));
+                depositoVuelto.add(new Moneda500());
                 diferencia -= 500;
             }
             else if(diferencia>=100) {
-                depositoVuelto.add(new Moneda100(Contador));
+                depositoVuelto.add(new Moneda100());
                 diferencia -= 100;
             }
-            Contador+=1;
         }
 
         RetiroProducto =p;

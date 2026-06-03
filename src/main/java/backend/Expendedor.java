@@ -128,17 +128,25 @@ public class Expendedor {
     }
 
     /**
-     * *Retorna el Producto seleccionado
-     * @return RetiroProducto
+     * *Retorna el Producto seleccionado o null en caso de que este vacio
+     * @return null
+     * @return P
      */
     public Producto getProducto(){
-        return (RetiroProducto);
+        if(RetiroProducto==null){
+            return null;
+            }
+        else{
+            Producto P=RetiroProducto;
+            RetiroProducto=null;
+            return (P);
+        }
     }
     /**
      * retorna una moneda de vuelto por llamada
      * @return el vuelto como moneda o null si no hay vuelto
      */
-    public Moneda getVuelto() {
+    public Moneda getVuelto(){
         return depositoVuelto.get();
     }
 }

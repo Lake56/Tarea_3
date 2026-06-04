@@ -117,4 +117,14 @@ public class PanelExpendedor {
         }
         return true;
     }
+
+    public Producto getProductoUnico() {
+        return depProductoComprado.getProducto();
+    }
+
+    public Moneda getVuelto() {
+        if (monedasVuelto.isEmpty()) return null;
+        return monedasVuelto.remove(0);
+    }
+
 }

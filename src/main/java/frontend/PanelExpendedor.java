@@ -80,4 +80,41 @@ public class PanelExpendedor {
                 depSuper8.addProducto(new Producto("Super8", "n:" + contadorSerie++));
         }
     }
+    //getter de depositos
+    public PanelDeposito getDeposito(String nombreProducto) {
+        return switch (nombreProducto) {
+            case "Coca Cola" -> depCoca;
+            case "Sprite" -> depSprite;
+            case "Fanta" -> depFanta;
+            case "Snickers" -> depSnickers;
+            case "Super8" -> depSuper8;
+            default -> null;
+        };
+    }
+
+    //comprar producto
+    public boolean comprar(String nombreProducto, Moneda moneda, int precio) {
+        if (moneda==null) {
+            return false;
+        }
+        if (moneda.getValor()< precio) {
+            monedasVuelto.add(moneda);
+            return false;
+        }
+        PanelDeposito dep = getDeposito(nombreProducto);
+        if (dep==null || dep.estaVacio()) {
+            monedasVuelto.add(moneda);
+            return false;
+        }
+        Producto p = dep.getProducto();
+        depProductoComprado.addProducto(p);
+
+        int cambio = moneda.getValor()-precio;
+        int serieM = 1;
+        while (cambio >= 100) {
+            monedasVuelto.add(new Moneda(100, "s:"+serieM++));
+            cambio-=100;
+        }
+        return true;
+    }
 }

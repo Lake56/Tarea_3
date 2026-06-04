@@ -65,4 +65,8 @@ public class Moneda {
     public void setY(int y) {
         this.y = y;
     }
+
+    public int getValor() {
+        return valor;
+    }
 }

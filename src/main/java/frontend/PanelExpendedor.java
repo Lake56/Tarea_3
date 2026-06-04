@@ -2,6 +2,7 @@ package frontend;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.awt.event.MouseEvent;
 
 public class PanelExpendedor {
 
@@ -45,6 +46,7 @@ public class PanelExpendedor {
         depProductoComprado = new PanelDeposito(x+ margen,y + alto -80, 100, 75, "Producto");
         depVuelto = new PanelDeposito(x+ margen +115, y + alto -80, 100, 75, "Vuelto");
 
+        inicializarProductos();
     }
 
     //carga con stock los depositos
@@ -56,6 +58,12 @@ public class PanelExpendedor {
             depFanta.addProducto(new Producto("Fanta", "n:" + contadorSerie++));
             depSnickers.addProducto(new Producto("Snickers", "n:" + contadorSerie++));
             depSuper8.addProducto(new Producto("Super8", "n:" + contadorSerie++));
+        }
+    }
+//al hacer click se rellena el deposito
+    public void click(int ejeX, int ejeY) {
+        if (ejeX >= x && ejeX <= x + ancho && ejeY >= y && ejeY <= y + alto) {
+            rellenarVacios();
         }
     }
     private void rellenarVacios() {

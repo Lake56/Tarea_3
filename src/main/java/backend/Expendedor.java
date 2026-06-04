@@ -111,35 +111,42 @@ public class Expendedor {
         int diferencia = m.getValor() - cualProducto.getPrecio();
         while (diferencia >= 100){
             if(diferencia>=1000) {
-                depositoVuelto.add(new Moneda1000(Contador));
+                depositoVuelto.add(new Moneda1000());
                 diferencia -= 1000;
             }
             else if(diferencia>=500) {
-                depositoVuelto.add(new Moneda500(Contador));
+                depositoVuelto.add(new Moneda500());
                 diferencia -= 500;
             }
             else if(diferencia>=100) {
-                depositoVuelto.add(new Moneda100(Contador));
+                depositoVuelto.add(new Moneda100());
                 diferencia -= 100;
             }
-            Contador+=1;
         }
 
         RetiroProducto =p;
     }
 
     /**
-     * *Retorna el Producto seleccionado
-     * @return RetiroProducto
+     * *Retorna el Producto seleccionado o null en caso de que este vacio
+     * @return null
+     * @return P
      */
     public Producto getProducto(){
-        return (RetiroProducto);
+        if(RetiroProducto==null){
+            return null;
+            }
+        else{
+            Producto P=RetiroProducto;
+            RetiroProducto=null;
+            return (P);
+        }
     }
     /**
      * retorna una moneda de vuelto por llamada
      * @return el vuelto como moneda o null si no hay vuelto
      */
-    public Moneda getVuelto() {
+    public Moneda getVuelto(){
         return depositoVuelto.get();
     }
 }

@@ -1,5 +1,7 @@
 package backend;
 
+import static backend.Expendedor.Contador;
+
 /**
  * clase abstracta de una moneda para pagar
  * implementa Comparable para ordenar por sus valores
@@ -7,11 +9,12 @@ package backend;
 public abstract class Moneda implements Comparable<Moneda>{
     private int serie;
     /**
-     * crea una moneda con su numero de serie
-     * @param serie asociada a la moneda
+     * crea una moneda con su numero de serie gracias al contador global
+     *
      */
-    public Moneda(int serie){
-        this.serie=serie;
+    public Moneda(){
+        this.serie=Contador;
+        Contador+=1;
     }
     /**
      * retorna el numero de serie para la moneda

@@ -6,10 +6,9 @@ package backend;
 public class Moneda500 extends Moneda {
     /**
      * Se crea la Moneda de 500 con su numero de serie
-     * @param serie
      */
-    public Moneda500(int serie) {
-        super(serie);
+    public Moneda500() {
+        super();
     }
 
     /**

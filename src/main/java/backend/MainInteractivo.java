@@ -87,16 +87,13 @@ public class MainInteractivo {
         // Se selecciona la moneda correspondiente al usuario
         switch(seleccionMon) {
             case "1":
-                moneda = new Moneda100(Contador);
-                Contador+=1;
+                moneda = new Moneda100();
                 break;
             case "2":
-                moneda = new Moneda500(Contador);
-                Contador+=1;
+                moneda = new Moneda500();
                 break;
             case "3":
-                moneda = new Moneda1000(Contador);
-                Contador+=1;
+                moneda = new Moneda1000();
                 break;
             default:
                 System.out.println("Moneda invalida");

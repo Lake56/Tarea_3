@@ -127,4 +127,49 @@ public class PanelExpendedor {
         return monedasVuelto.remove(0);
     }
 
+    //pintado
+    public void paintComponent(Graphics g) {
+        g.setColor(new Color(91, 131, 212));
+        g.fillRect(x, y, ancho, alto);
+        g.setColor(Color.WHITE);
+        g.drawRect(x, y, ancho, alto);
+        g.setFont(new Font("Arial", Font.BOLD, 17));
+        g.drawString("Expendedor", x + 10, y + 22);
+
+        depCoca.paintComponent(g);
+        depSprite.paintComponent(g);
+        depFanta.paintComponent(g);
+        depSnickers.paintComponent(g);
+        depSuper8.paintComponent(g);
+        depProductoComprado.paintComponent(g);
+        depVuelto.paintComponent(g);
+
+        g.setColor(Color.LIGHT_GRAY);
+        g.setFont(new Font("Arial", Font.PLAIN, 11));
+
+        if (!monedasVuelto.isEmpty()) {
+            int mx = depVuelto.getX() + 5;
+            int my = depVuelto.getY() + 20;
+            for (int i = 0; i < Math.min(monedasVuelto.size(), 3); i++) {
+                Moneda m = monedasVuelto.get(i);
+                m.setX(mx);
+                m.setY(my);
+                m.paintComponent(g);
+                mx += 42;
+            }
+        }
+    }
+
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+    public int getAncho() {
+        return ancho;
+    }
+    public int getAlto() {
+        return alto;
+    }
 }

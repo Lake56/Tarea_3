@@ -1,16 +1,11 @@
 package frontend;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.awt.event.MouseEvent;
 
-public class PanelExpendedor {
-
-    private int x;
-    private int y;
-    private int ancho;
-    private int alto;
-
+public class PanelExpendedor extends JPanel {
     private PanelDeposito depCoca;
     private PanelDeposito depSprite;
     private PanelDeposito depFanta;
@@ -24,34 +19,47 @@ public class PanelExpendedor {
     private int numProductos;
     private static int contadorSerie = 1;
 
-    public PanelExpendedor(int x, int y, int ancho, int alto, int numProductos) {
-        this.x = x;
-        this.y = y;
-        this.ancho = ancho;
-        this.alto = alto;
+    public PanelExpendedor(int numProductos) {
         this.numProductos = numProductos;
         this.monedasVuelto = new ArrayList<>();
 
-        int depAncho = 80;
-        int depAlto = alto-120;
-        int margen = 15;
-        int brecha = 10;
+        this.setBackground(new Color(91, 131, 212));
+        this.setLayout(new BorderLayout(10, 10));
+        this.setBorder(BorderFactory.createEmptyBorder(35, 15, 15, 15));
 
-        depCoca = new PanelDeposito(x+ margen,y + 35, depAncho, depAlto, "Coca Cola");
-        depSprite = new PanelDeposito(x+ margen +(depAncho + brecha),y + 35, depAncho, depAlto, "Sprite");
-        depFanta = new PanelDeposito(x+ margen +(depAncho + brecha) * 2, y + 35, depAncho, depAlto, "Fanta");
-        depSnickers = new PanelDeposito(x+ margen +(depAncho + brecha) * 3, y + 35, depAncho, depAlto, "Snickers");
-        depSuper8 = new PanelDeposito(x+ margen +(depAncho + brecha) * 4, y + 35, depAncho, depAlto, "Super8");
+        JPanel panelSuperior = new JPanel(new GridLayout(1, 5, 10, 0));
+        panelSuperior.setOpaque(false);
 
-        depProductoComprado = new PanelDeposito(x+ margen,y + alto -80, 100, 75, "Producto");
-        depVuelto = new PanelDeposito(x+ margen +115, y + alto -80, 100, 75, "Vuelto");
+        depCoca = new PanelDeposito("Coca Cola");
+        depSprite = new PanelDeposito("Sprite");
+        depFanta = new PanelDeposito("Fanta");
+        depSnickers = new PanelDeposito("Snickers");
+        depSuper8 = new PanelDeposito("Super8");
+
+        panelSuperior.add(depCoca);
+        panelSuperior.add(depSprite);
+        panelSuperior.add(depFanta);
+        panelSuperior.add(depSnickers);
+        panelSuperior.add(depSuper8);
+
+        JPanel panelInferior = new JPanel(new GridLayout(1, 2, 50, 0));
+        panelInferior.setOpaque(false);
+        panelInferior.setPreferredSize(new Dimension(0, 120)); // Forzamos una altura de 120px
+
+        depProductoComprado = new PanelDeposito("Producto");
+        depVuelto = new PanelDeposito("Vuelto");
+
+        panelInferior.add(depProductoComprado);
+        panelInferior.add(depVuelto);
+
+        this.add(panelSuperior, BorderLayout.CENTER);
+        this.add(panelInferior, BorderLayout.SOUTH);
 
         inicializarProductos();
     }
 
     //carga con stock los depositos
     private void inicializarProductos() {
-
         for (int i = 0; i < numProductos; i++) {
             depCoca.addProducto(new Producto("Coca Cola", "n:" + contadorSerie++));
             depSprite.addProducto(new Producto("Sprite", "n:" + contadorSerie++));
@@ -60,11 +68,9 @@ public class PanelExpendedor {
             depSuper8.addProducto(new Producto("Super8", "n:" + contadorSerie++));
         }
     }
-//al hacer click se rellena el deposito
     public void click(int ejeX, int ejeY) {
-        if (ejeX >= x && ejeX <= x + ancho && ejeY >= y && ejeY <= y + alto) {
-            rellenarVacios();
-        }
+        rellenarVacios();
+        repaint();
     }
     private void rellenarVacios() {
         if (depCoca.estaVacio()) {
@@ -123,6 +129,8 @@ public class PanelExpendedor {
             monedasVuelto.add(new Moneda(100, "s:"+serieM++));
             cambio-=100;
         }
+
+        repaint();
         return true;
     }
 
@@ -136,48 +144,37 @@ public class PanelExpendedor {
     }
 
     //pintado
-    public void paintComponent(Graphics g) {
-        g.setColor(new Color(91, 131, 212));
-        g.fillRect(x, y, ancho, alto);
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g); // Java pinta el fondo azul
+
         g.setColor(Color.WHITE);
-        g.drawRect(x, y, ancho, alto);
+        g.drawRect(0, 0, getWidth() - 1, getHeight() - 1); // Borde general
+
         g.setFont(new Font("Arial", Font.BOLD, 17));
-        g.drawString("Expendedor", x + 10, y + 22);
+        g.drawString("Expendedor", 10, 22); // Título
+    }
 
-        depCoca.paintComponent(g);
-        depSprite.paintComponent(g);
-        depFanta.paintComponent(g);
-        depSnickers.paintComponent(g);
-        depSuper8.paintComponent(g);
-        depProductoComprado.paintComponent(g);
-        depVuelto.paintComponent(g);
+    @Override
+    protected void paintChildren(Graphics g) {
+        super.paintChildren(g);
 
-        g.setColor(Color.LIGHT_GRAY);
-        g.setFont(new Font("Arial", Font.PLAIN, 11));
+        if(!monedasVuelto.isEmpty()) {
+            Point posVuelto = SwingUtilities.convertPoint(depVuelto, 0, 0, this);
 
-        if (!monedasVuelto.isEmpty()) {
-            int mx = depVuelto.getX() + 5;
-            int my = depVuelto.getY() + 20;
-            for (int i = 0; i < Math.min(monedasVuelto.size(), 3); i++) {
+            int x = posVuelto.x + 5;
+            int y = posVuelto.y + 20;
+
+            for(int i = 0; i < Math.min(monedasVuelto.size(), 3); i++) {
                 Moneda m = monedasVuelto.get(i);
-                m.setX(mx);
-                m.setY(my);
+
+                m.setX(x);
+                m.setY(y);
+
                 m.paintComponent(g);
-                mx += 42;
+
+                x += 42;
             }
         }
-    }
-
-    public int getX() {
-        return x;
-    }
-    public int getY() {
-        return y;
-    }
-    public int getAncho() {
-        return ancho;
-    }
-    public int getAlto() {
-        return alto;
     }
 }

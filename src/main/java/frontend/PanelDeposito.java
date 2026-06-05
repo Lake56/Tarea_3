@@ -1,22 +1,14 @@
 package frontend;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class PanelDeposito {
-
-    private int x;
-    private int y;
-    private int ancho;
-    private int alto;
+public class PanelDeposito extends JPanel {
     private String nombre;
     private ArrayList<Producto> productos;
 
-    public PanelDeposito(int x, int y, int ancho, int alto, String nombre) {
-        this.x = x;
-        this.y = y;
-        this.ancho = ancho;
-        this.alto = alto;
+    public PanelDeposito(String nombre) {
         this.nombre = nombre;
         this.productos = new ArrayList<>();
     }
@@ -24,6 +16,7 @@ public class PanelDeposito {
     public void addProducto(Producto p) {
         productos.add(p);
         reposicionar();
+        repaint();
     }
 
     //obtener producto
@@ -31,6 +24,7 @@ public class PanelDeposito {
         if (productos.isEmpty()) {
             return null;
         }
+
         Producto p = productos.remove(0);
         reposicionar();
         return p;
@@ -43,40 +37,35 @@ public class PanelDeposito {
 
     //reposicionar los productos
     public void reposicionar() {
-        int offsetY = y + 20;
-        for (Producto p:productos) {
-            p.setX(x + (ancho - 45) / 2); //centrarlo
+        int offsetY = 20;
+        for (Producto p : productos) {
             p.setY(offsetY);
             offsetY += 62;
         }
     }
 
     //dibuja los depositos de los productos
-    public void paintComponent(Graphics g) {
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        int ancho = this.getWidth();
+        int alto = this.getHeight();
+
         g.setColor(Color.GRAY);
-        g.fillRect(x, y, ancho, alto);
+        g.fillRect(0, 0, ancho, alto);
+
         g.setColor(Color.DARK_GRAY);
-        g.drawRect(x, y, ancho, alto);
+        g.drawRect(0, 0, ancho - 1, alto - 1);
 
-        g.setFont(new Font("Arial", Font.BOLD, 8));
-        g.drawString(nombre, x+3, y+12);
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 10));
+        g.drawString(nombre, 5, 12);
 
-        for (Producto p:productos) {
+        for (Producto p : productos) {
+            p.setX((ancho - 45) / 2);
+
             p.paintComponent(g);
         }
-    }
-
-    //getters
-    public int getX() {
-        return x;
-    }
-    public int getY() {
-        return y;
-    }
-    public int getAncho() {
-        return ancho;
-    }
-    public int getAlto() {
-        return alto;
     }
 }

@@ -15,7 +15,7 @@ public class PanelPrincipal extends JPanel {
         this.expendedor = new PanelExpendedor(4);
         this.add(expendedor);
 
-        this.comprador = new PanelComprador();
+        this.comprador = new PanelComprador(expendedor);
         this.add(comprador);
 
         this.addMouseListener(new MouseAdapter() {

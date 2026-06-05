@@ -5,8 +5,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class PanelComprador extends JPanel {
-    private int x = 0;
-    private int y = 0;
+    final private int x = 0;
+    final private int y = 0;
 
     private int estado = 0;
 
@@ -26,14 +26,15 @@ public class PanelComprador extends JPanel {
     private ArrayList<Moneda> monedas;
     private ArrayList<Producto> inventario;
 
-    /*
-    Todo:
-    * Terminar visual del inventario
-    * Secuencia de estados ciclicos
-    * Terminar metodo click con la logica
-     */
+    private PanelExpendedor expendedor;
+    private Moneda moneda;
 
-    public PanelComprador() {
+
+    public PanelComprador(PanelExpendedor expendedor) {
+        this.expendedor = expendedor;
+
+        this.estado = 0;
+
         this.botonCoca = new Boton(x + 20, y + 40, 120, 35, "Coca Cola", Color.RED);
         this.botonSprite = new Boton(x + 160, y + 40, 120, 35, "Sprite", Color.GREEN);
         this.botonFanta = new Boton(x + 20, y + 90, 120, 35, "Fanta", Color.ORANGE);
@@ -186,83 +187,98 @@ public class PanelComprador extends JPanel {
     public void click(int ejeX, int ejeY) {
         if (estado == 0) {
             if (botonMoneda100.contiene(ejeX, ejeY)) {
-                System.out.println("Moneda de 100 ingresada.");
-                estado = 1;
+                insertarMoneda(100);
             }
             else if (botonMoneda500.contiene(ejeX, ejeY)) {
-                System.out.println("Moneda de 500 ingresada.");
-                estado = 1;
+                insertarMoneda(500);
             }
             else if (botonMoneda1000.contiene(ejeX, ejeY)) {
-                System.out.println("Moneda de 1000 ingresada.");
-                estado = 1;
-            }
-            else {
-                System.out.println("Primero debes ingresar una moneda.");
+                insertarMoneda(1000);
             }
         }
 
         else if (estado == 1) {
+            boolean compraExitosa = false;
+
             if (botonCoca.contiene(ejeX, ejeY)) {
-                System.out.println("Coca Cola seleccionada. Procesando...");
-                // Llamar metodo comprarProducto()
-                estado = 2;
+                compraExitosa = expendedor.comprar("Coca Cola", moneda, 500);
             }
             else if (botonSprite.contiene(ejeX, ejeY)) {
-                System.out.println("Sprite seleccionada. Procesando...");
-                // Llamar metodo comprarProducto()
-
-                estado = 2;
+                compraExitosa = expendedor.comprar("Sprite", moneda, 500);
             }
             else if (botonFanta.contiene(ejeX, ejeY)) {
-                System.out.println("Fanta seleccionada. Procesando...");
-                // Llamar metodo comprarProducto()
-                estado = 2;
+                compraExitosa = expendedor.comprar("Fanta", moneda, 500);
             }
             else if (botonSnickers.contiene(ejeX, ejeY)) {
-                System.out.println("Snickers seleccionados. Procesando...");
-                // Llamar metodo comprarProducto()
-                estado = 2;
+                compraExitosa = expendedor.comprar("Snickers", moneda, 600);
             }
             else if (botonSuper8.contiene(ejeX, ejeY)) {
-                System.out.println("Super8 seleccionado. Procesando...");
-                // Llamar metodo comprarProducto()
-                estado = 2;
+                compraExitosa = expendedor.comprar("Super8", moneda, 300);
             }
-            else {
-                System.out.println("Selecciona un producto.");
+
+            if (botonCoca.contiene(ejeX, ejeY) || botonSprite.contiene(ejeX, ejeY) ||
+                    botonFanta.contiene(ejeX, ejeY) || botonSnickers.contiene(ejeX, ejeY) ||
+                    botonSuper8.contiene(ejeX, ejeY)) {
+
+                moneda = null;
+
+                if (compraExitosa) {
+                    estado = 2;
+                    System.out.println("Retire su producto");
+                } else {
+                    estado = 3;
+                    System.out.println("Rechazado. Retire su vuelto");
+                }
             }
         }
+
         else if (estado == 2) {
             if (botonRePro.contiene(ejeX, ejeY)) {
-                System.out.println("Recogiendo producto del depósito...");
+                Producto p = expendedor.getProductoUnico();
 
-                // Agregar producto visual a lista de producto
+                if (p != null) {
+                    inventario.add(p);
+                    System.out.println("Producto guardado en el inventario.");
+                }
 
                 estado = 3;
             }
-            else if (botonReVue.contiene(ejeX, ejeY)) {
-                System.out.println("ACCIÓN INVÁLIDA: Saca tu bebida primero.");
-            }
-            else {
-                System.out.println("Debes recoger tu compra para continuar.");
-            }
         }
-
         else if (estado == 3) {
             if (botonReVue.contiene(ejeX, ejeY)) {
-                System.out.println("Recogiendo vuelto del depósito...");
 
-                // Agregar las monedas de monedero después
+                Moneda m = expendedor.getVuelto();
+
+                while (m != null) {
+                    monedas.add(m);
+                    m = expendedor.getVuelto();
+                }
+
+                System.out.println("Vuelto recogido por completo.");
 
                 estado = 0;
             }
-            else if (botonRePro.contiene(ejeX, ejeY)) {
-                System.out.println("Ya sacaste tu bebida, saca tu vuelto.");
+        }
+    }
+
+    private void insertarMoneda(int valor) {
+        Moneda seleccionada = null;
+
+        for(Moneda m : monedas) {
+            if(m.getValor() == valor) {
+                    seleccionada = m;
+                    break;
             }
-            else {
-                System.out.println("Debes recoger tu vuelto para finalizar.");
-            }
+        }
+
+        if(seleccionada != null) {
+            monedas.remove(seleccionada);
+            moneda = seleccionada;
+            estado = 1;
+
+            System.out.println("Moneda de " + valor + " lista para pagar. Seleccione producto.");
+        } else {
+            System.out.println("No tienes monedas de $" + valor + " disponibles.");
         }
     }
 }

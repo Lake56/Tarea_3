@@ -57,11 +57,13 @@ public class PanelComprador extends JPanel {
         monedas.add(new Moneda(1000, "M-°004"));
         monedas.add(new Moneda(500, "M-005"));
 
+        /*
         inventario.add(new Producto("Coca Cola", "P-001"));
         inventario.add(new Producto("Sprite", "P-002"));
         inventario.add(new Producto("Fanta", "P-003"));
         inventario.add(new Producto("Snickers", "P-004"));
         inventario.add(new Producto("Super8", "P-005"));
+         */
     }
 
     @Override

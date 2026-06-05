@@ -1,13 +1,12 @@
 package frontend;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class PanelComprador {
-    private int x;
-    private int y;
-    private int ancho;
-    private int alto;
+public class PanelComprador extends JPanel {
+    private int x = 0;
+    private int y = 0;
 
     private int estado = 0;
 
@@ -34,12 +33,7 @@ public class PanelComprador {
     * Terminar metodo click con la logica
      */
 
-    public PanelComprador(int x, int y, int ancho, int alto) {
-        this.x = x;
-        this.y = y;
-        this.ancho = ancho;
-        this.alto = alto;
-
+    public PanelComprador() {
         this.botonCoca = new Boton(x + 20, y + 40, 120, 35, "Coca Cola", Color.RED);
         this.botonSprite = new Boton(x + 160, y + 40, 120, 35, "Sprite", Color.GREEN);
         this.botonFanta = new Boton(x + 20, y + 90, 120, 35, "Fanta", Color.ORANGE);
@@ -69,9 +63,15 @@ public class PanelComprador {
         inventario.add(new Producto("Super8", "P-005"));
     }
 
+    @Override
     public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        int ancho = this.getWidth();
+        int alto = this.getHeight();
+
         g.setColor(new Color(190, 190, 190));
-        g.fillRect(x, y, ancho, alto);
+        g.fillRect(0, 0, ancho, alto);
 
         g.setColor(new Color(0, 102, 204)); // Azul para que resalte
         g.setFont(new Font("Arial", Font.BOLD, 13));
@@ -119,7 +119,7 @@ public class PanelComprador {
         g.drawString("Monedero", x + 110, y + 335);
 
         g.setColor(new Color(175, 175, 175));
-        g.fillRect(x + 20, y + 350, 260, 75); // Fondo gris del monedero
+        g.fillRect(x + 20, y + 350, ancho - 40, 75);
 
         g.setFont(fuenteSeries);
 

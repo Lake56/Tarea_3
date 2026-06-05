@@ -29,7 +29,7 @@ public class Producto {
             this.alto = 65;
         }
         else if(sabor.equals("Sprite")) {
-            this.ancho = 130;
+            this.ancho = 75;
             this.alto = 80;
         }
         else {

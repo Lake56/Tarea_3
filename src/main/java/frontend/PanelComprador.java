@@ -45,8 +45,8 @@ public class PanelComprador extends JPanel {
         this.botonMoneda500 = new Boton(x + 160, y + 225, 100, 35, "500 Pesos", Color.GRAY);
         this.botonMoneda1000 = new Boton(x + 100, y + 270, 100, 35, "1000 Pesos", Color.GRAY);
 
-        this.botonRePro = new Boton(x + 20, y + 575, 120, 35, "Recoger Producto", Color.GRAY);
-        this.botonReVue = new Boton(x + 160, y + 575, 120, 35, "Recoger Vuelto", Color.GRAY);
+        this.botonRePro = new Boton(x + 20, y + 610, 120, 35, "Recoger Producto", Color.GRAY);
+        this.botonReVue = new Boton(x + 160, y + 610, 120, 35, "Recoger Vuelto", Color.GRAY);
 
         this.monedas = new ArrayList<>();
         this.inventario = new ArrayList<>();
@@ -131,7 +131,7 @@ public class PanelComprador extends JPanel {
         int monedaInicialX = x + 30;
         int monedaInicialY = y + 360;
 
-        int limiteMonedas = Math.min(monedas.size(), 6);
+        int limiteMonedas = Math.min(monedas.size(), 5);
 
         for (int i = 0; i < limiteMonedas; i++) {
             Moneda m = monedas.get(i);
@@ -154,19 +154,12 @@ public class PanelComprador extends JPanel {
         g.drawString("Inventario", x + 110, y + 460);
 
         g.setColor(new Color(175, 175, 175));
-        g.fillRect(x + 20, y + 480, 260, 75);
-
-        g.setColor(Color.BLACK);
-        g.setFont(fuenteTitulos);
-        g.drawString("Inventario", x + 110, y + 460);
-
-        g.setColor(new Color(175, 175, 175));
-        g.fillRect(x + 20, y + 480, 260, 75);
+        g.fillRect(x + 20, y + 480, 260, 120);
 
         int prodInicialX = x + 30;
         int prodInicialY = y + 490;
 
-        int limiteProductos = Math.min(inventario.size(), 4);
+        int limiteProductos = Math.min(inventario.size(), 3);
 
         for (int i = 0; i < limiteProductos; i++) {
             Producto p = inventario.get(i);

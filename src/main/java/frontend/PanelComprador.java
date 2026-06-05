@@ -245,7 +245,12 @@ public class PanelComprador extends JPanel {
                     System.out.println("Producto guardado en el inventario.");
                 }
 
-                estado = 3;
+                if(expendedor.getVuelto() == null) {
+                    estado = 0;
+                }
+                else {
+                    estado = 3;
+                }
             }
         }
         else if (estado == 3) {

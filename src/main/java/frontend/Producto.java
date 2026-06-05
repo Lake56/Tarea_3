@@ -83,11 +83,11 @@ public class Producto {
         }
 
         g.setColor(Color.WHITE);
-        g.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 9));
+        g.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 10));
 
         g.setColor(Color.BLACK);
-        g.drawString(serie, x + 2, y + 66);
+        g.drawString(serie, x + 2, y + 71);
         g.setColor(Color.WHITE);
-        g.drawString(serie, x + 3, y + 65);
+        g.drawString(serie, x + 3, y + 70);
     }
 }

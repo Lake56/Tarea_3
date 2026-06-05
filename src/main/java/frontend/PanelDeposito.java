@@ -38,9 +38,10 @@ public class PanelDeposito extends JPanel {
     //reposicionar los productos
     public void reposicionar() {
         int offsetY = 20;
+
         for (Producto p : productos) {
             p.setY(offsetY);
-            offsetY += 62;
+            offsetY += 75;
         }
     }
 

@@ -15,6 +15,7 @@ public class PanelExpendedor extends JPanel {
 
     private PanelDeposito depVuelto;
     private ArrayList<Moneda> monedasVuelto;
+    private ArrayList<Moneda> ganancias;
 
     private int numProductos;
     private static int contadorSerie = 1;
@@ -22,6 +23,8 @@ public class PanelExpendedor extends JPanel {
     public PanelExpendedor(int numProductos) {
         this.numProductos = numProductos;
         this.monedasVuelto = new ArrayList<>();
+
+        this.ganancias = new ArrayList<>();
 
         this.setBackground(new Color(91, 131, 212));
         this.setLayout(new BorderLayout(10, 10));
@@ -111,17 +114,22 @@ public class PanelExpendedor extends JPanel {
         if (moneda==null) {
             return false;
         }
+
         if (moneda.getValor()< precio) {
             monedasVuelto.add(moneda);
             return false;
         }
+
         PanelDeposito dep = getDeposito(nombreProducto);
         if (dep==null || dep.estaVacio()) {
             monedasVuelto.add(moneda);
             return false;
         }
+
         Producto p = dep.getProducto();
         depProductoComprado.addProducto(p);
+
+        ganancias.add(moneda);
 
         int cambio = moneda.getValor()-precio;
         int serieM = 1;
@@ -131,6 +139,7 @@ public class PanelExpendedor extends JPanel {
         }
 
         repaint();
+
         return true;
     }
 

@@ -133,9 +133,15 @@ public class PanelExpendedor extends JPanel {
 
         int cambio = moneda.getValor()-precio;
         int serieM = 1;
+
+        while(cambio >= 500) {
+            monedasVuelto.add(new Moneda(500, "V500-" + serieM++));
+            cambio -= 500;
+        }
+
         while (cambio >= 100) {
-            monedasVuelto.add(new Moneda(100, "s:"+serieM++));
-            cambio-=100;
+            monedasVuelto.add(new Moneda(100, "V100-" + serieM++));
+            cambio -= 100;
         }
 
         repaint();

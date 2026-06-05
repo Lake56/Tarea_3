@@ -41,7 +41,7 @@ public class PanelDeposito extends JPanel {
 
         for (Producto p : productos) {
             p.setY(offsetY);
-            offsetY += 75;
+            offsetY += 100;
         }
     }
 
@@ -64,7 +64,7 @@ public class PanelDeposito extends JPanel {
         g.drawString(nombre, 5, 12);
 
         for (Producto p : productos) {
-            p.setX((ancho - 45) / 2);
+            p.setX((ancho - p.getAncho()) / 2);
 
             p.paintComponent(g);
         }

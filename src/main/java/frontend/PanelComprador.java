@@ -175,11 +175,11 @@ public class PanelComprador extends JPanel {
             p.setY(prodInicialY);
             p.paintComponent(g);
 
-            prodInicialX += 55;
+            prodInicialX += 80;
 
-            if (prodInicialX > (x + 20 + 260 - 45)) {
+            if (prodInicialX > (x + 20 + 260 - 70)) {
                 prodInicialX = x + 30;
-                prodInicialY += 65;
+                prodInicialY += 85;
             }
         }
 

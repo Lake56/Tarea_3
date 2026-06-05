@@ -11,11 +11,32 @@ public class Producto {
     private int x;
     private int y;
 
+    private int ancho;
+    private int alto;
+
     private Image imagen;
 
     public Producto(String sabor, String serie) {
         this.sabor = sabor;
         this.serie = serie;
+
+        if(sabor.equals("Super8")) {
+            this.ancho = 75;
+            this.alto = 45;
+        }
+        else if (sabor.equals("Snickers")) {
+            this.ancho = 75;
+            this.alto = 65;
+        }
+        else if(sabor.equals("Sprite")) {
+            this.ancho = 130;
+            this.alto = 80;
+        }
+        else {
+            this.ancho = 75;
+            this.alto = 75;
+        }
+
         cargarImagen();
     }
 
@@ -40,7 +61,7 @@ public class Producto {
             if (url != null) {
                 ImageIcon icon = new ImageIcon(url);
 
-                this.imagen = icon.getImage().getScaledInstance(45, 55, Image.SCALE_SMOOTH);
+                this.imagen = icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
             } else {
                 System.out.print("Java no ha encontrado el archivo " + ruta);
             }
@@ -55,6 +76,10 @@ public class Producto {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getAncho() {
+        return this.ancho;
     }
 
     public void paintComponent(Graphics g) {

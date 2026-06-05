@@ -1,36 +1,48 @@
 package frontend;
 
 import javax.swing.JPanel;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class PanelPrincipal extends JPanel {
     private PanelComprador comprador;
-    private PanelExpendedor exp;
+    private PanelExpendedor expendedor;
 
     public PanelPrincipal() {
-        this.exp = new PanelExpendedor(10, 10, 545, 660, 4);
-        this.comprador = new PanelComprador(570, 20, 300, 630);
+        this.setLayout(new GridLayout(1, 2));
+
+        this.expendedor = new PanelExpendedor(4);
+        this.add(expendedor);
+
+        this.comprador = new PanelComprador();
+        this.add(comprador);
 
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                exp.click(e.getX(), e.getY());
-                comprador.click(e.getX(), e.getY());
+                int x = e.getX();
+                int y = e.getY();
+
+                if (x >= expendedor.getX() && x <= (expendedor.getX() + expendedor.getWidth()) &&
+                        y >= expendedor.getY() && y <= (expendedor.getY() + expendedor.getHeight())) {
+
+                    int xRelExp = x - expendedor.getX();
+                    int yRelExp = y - expendedor.getY();
+
+                    expendedor.click(xRelExp, yRelExp);
+                }
+                else if (x >= comprador.getX() && x <= (comprador.getX() + comprador.getWidth()) &&
+                        y >= comprador.getY() && y <= (comprador.getY() + comprador.getHeight())) {
+
+                    int xRelCom = x - comprador.getX();
+                    int yRelCom = y - comprador.getY();
+
+                    comprador.click(xRelCom, yRelCom);
+                }
 
                 repaint();
             }
         });
-    }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        exp.paintComponent(g);
-        if(comprador != null) {
-            comprador.paintComponent(g);
-        }
     }
 }

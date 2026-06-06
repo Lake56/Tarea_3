@@ -3,7 +3,8 @@ package frontend;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.awt.event.MouseEvent;
+
+import backend.Expendedor;
 
 /**
  * Representa la interfaz del expendedor
@@ -25,6 +26,8 @@ public class PanelExpendedor extends JPanel {
     private int numProductos;
     private static int contadorSerie = 1;
 
+    private Expendedor logica;
+
     /**
      * Se crea el expendedor con sus productos
      * @param numProductos cantidad de productos por igual
@@ -32,8 +35,9 @@ public class PanelExpendedor extends JPanel {
     public PanelExpendedor(int numProductos) {
         this.numProductos = numProductos;
         this.monedasVuelto = new ArrayList<>();
-
         this.ganancias = new ArrayList<>();
+
+        this.logica = new Expendedor(numProductos);
 
         this.setBackground(new Color(91, 131, 212));
         this.setLayout(new BorderLayout(10, 10));
@@ -139,7 +143,7 @@ public class PanelExpendedor extends JPanel {
     }
 
     /**
-     * Realiza la compra de el producto con su moneda
+     * Realiza la compra de el producto con su moneda llamando a la logica del backend
      * El producto se entrega en la bandeja de retiro
      * y se genera el vuelto de la compra
      * @param nombreProducto solicitado
@@ -153,38 +157,74 @@ public class PanelExpendedor extends JPanel {
             return false;
         }
 
-        if (moneda.getValor()< precio) {
+        try {
+            backend.Moneda monedaParaPagar = null;
+
+            if (moneda.getValor() == 100) {
+                monedaParaPagar = new backend.Moneda100();
+            } else if (moneda.getValor() == 500) {
+                monedaParaPagar = new backend.Moneda500();
+            } else if (moneda.getValor() == 1000) {
+                monedaParaPagar = new backend.Moneda1000();
+            }
+
+            backend.tipoProduct productoEnum = null;
+
+            switch(nombreProducto) {
+                case "Coca Cola": productoEnum = backend.tipoProduct.COCA; break;
+                case "Sprite": productoEnum = backend.tipoProduct.SPRITE; break;
+                case "Fanta": productoEnum = backend.tipoProduct.FANTA; break;
+                case "Snickers": productoEnum = backend.tipoProduct.SNICKERS; break;
+                case "Super8": productoEnum = backend.tipoProduct.SUPER8; break;
+            }
+
+            logica.comprarProducto(monedaParaPagar, productoEnum);
+
+            PanelDeposito dep = getDeposito(nombreProducto);
+            if (dep == null || dep.estaVacio()) {
+                monedasVuelto.add(moneda);
+                return false;
+            }
+
+            Producto p = dep.getProducto();
+            depProductoComprado.addProducto(p);
+            ganancias.add(moneda);
+
+
+            backend.Moneda mBackend = logica.getVuelto();
+
+            while(mBackend != null) {
+                int valorMoneda = mBackend.getValor();
+                String serieMoneda = String.valueOf(mBackend.getSerie());
+
+                frontend.Moneda mVisual = new frontend.Moneda(valorMoneda, serieMoneda);
+
+                monedasVuelto.add(mVisual);
+
+                mBackend = logica.getVuelto();
+            }
+
+            int cambio = moneda.getValor() - precio;
+            int serieM = 1;
+            while(cambio >= 500) {
+                monedasVuelto.add(new Moneda(500, "V500-" + serieM++));
+                cambio -= 500;
+            }
+            while (cambio >= 100) {
+                monedasVuelto.add(new Moneda(100, "V100-" + serieM++));
+                cambio -= 100;
+            }
+
+            repaint();
+            return true;
+
+        } catch (Exception e) {
+            System.out.println("El backend rechazó la compra: " + e.getMessage());
+
             monedasVuelto.add(moneda);
+            repaint();
             return false;
         }
-
-        PanelDeposito dep = getDeposito(nombreProducto);
-        if (dep==null || dep.estaVacio()) {
-            monedasVuelto.add(moneda);
-            return false;
-        }
-
-        Producto p = dep.getProducto();
-        depProductoComprado.addProducto(p);
-
-        ganancias.add(moneda);
-
-        int cambio = moneda.getValor()-precio;
-        int serieM = 1;
-
-        while(cambio >= 500) {
-            monedasVuelto.add(new Moneda(500, "V500-" + serieM++));
-            cambio -= 500;
-        }
-
-        while (cambio >= 100) {
-            monedasVuelto.add(new Moneda(100, "V100-" + serieM++));
-            cambio -= 100;
-        }
-
-        repaint();
-
-        return true;
     }
 
     /**

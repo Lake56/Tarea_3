@@ -5,6 +5,11 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
+/**
+ * Representacion grafica de los productos
+ * Carga y dibuja la imagen asociada al producto
+ * con su numero de serie
+ */
 public class Producto {
     private String sabor;
     private String serie;
@@ -16,6 +21,12 @@ public class Producto {
 
     private Image imagen;
 
+    /**
+     * Crea el producto con su sabor y su numero de serie
+     * Determina sus dimensiones e inicializa la imagen
+     * @param sabor del producto
+     * @param serie del producto
+     */
     public Producto(String sabor, String serie) {
         this.sabor = sabor;
         this.serie = serie;
@@ -40,6 +51,11 @@ public class Producto {
         cargarImagen();
     }
 
+    /**
+     * Carga la imagen correspondiente al producto
+     * Si la imagen no se puede cargar se utilizara
+     * una representacion alternativa a la original
+     */
     private void cargarImagen() {
         String ruta = "";
 
@@ -70,18 +86,36 @@ public class Producto {
         }
     }
 
+    /**
+     * Actualiza la coordenada x del producto
+     * @param x nueva posicion
+     */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     * Actualiza la coordenada y del producto
+     * @param y nueva posicion
+     */
     public void setY(int y) {
         this.y = y;
     }
 
+    /**
+     * Retorna el ancho utilizado para la representacion
+     * grafica del producto
+     * @return ancho del producto
+     */
     public int getAncho() {
         return this.ancho;
     }
 
+    /**
+     * Dibuja el producto en la pantalla con su
+     * imagen correspondiente o su representacion alternativa
+     * @param g contexto grafico del dibujo
+     */
     public void paintComponent(Graphics g) {
         if (imagen != null) {
             g.drawImage(imagen, x, y, null);

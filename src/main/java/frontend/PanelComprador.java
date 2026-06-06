@@ -4,6 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Representa la interfaz grafica del comprador
+ * Permite seleccionar monedas, comprar productos,
+ * retirar productos y recoger vuelto mediante
+ * interacciones con el mouse.
+ */
+
 public class PanelComprador extends JPanel {
     final private int x = 0;
     final private int y = 0;
@@ -29,7 +36,11 @@ public class PanelComprador extends JPanel {
     private PanelExpendedor expendedor;
     private Moneda moneda;
 
-
+    /**
+     * Crea el panel del comprador
+     * Inicializa los botones, inventario, monedas y la referencia al expendedor.
+     * @param expendedor panel del expendedor con el que interactuara.
+     */
     public PanelComprador(PanelExpendedor expendedor) {
         this.expendedor = expendedor;
 
@@ -66,6 +77,14 @@ public class PanelComprador extends JPanel {
          */
     }
 
+
+    /**
+     * Dibuja todos los elementos graficos del comprador,
+     * esto incluyendo botones, monedas, inventario y estado
+     * actual de la interaccion.
+     *
+     * @param g contexto grafico del dibujo.
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -183,6 +202,13 @@ public class PanelComprador extends JPanel {
         botonReVue.paintComponent(g);
     }
 
+    /**
+     * Procesa los clicks que realiza el usuario
+     * siendo insertar monedas, seleccionar producto
+     * retirar producto o recoger el vuelto
+     * @param ejeX del click
+     * @param ejeY del click
+     */
     public void click(int ejeX, int ejeY) {
         if (estado == 0) {
             if (botonMoneda100.contiene(ejeX, ejeY)) {
@@ -265,6 +291,11 @@ public class PanelComprador extends JPanel {
         }
     }
 
+    /**
+     * Busca la moneda con el valor
+     * seleccionada por el comprador.
+     * @param valor de la moneda.
+     */
     private void insertarMoneda(int valor) {
         Moneda seleccionada = null;
 

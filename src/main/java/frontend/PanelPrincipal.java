@@ -5,10 +5,19 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Panel principal de la aplicacion
+ * Contiene el panel comprador y expendedor
+ * Distribuye los eventos generador por el mouse
+ */
 public class PanelPrincipal extends JPanel {
     private PanelComprador comprador;
     private PanelExpendedor expendedor;
 
+    /**
+     * Crea el panel principal e inicializa
+     * el panel comprador y expendeodr
+     */
     public PanelPrincipal() {
         this.setLayout(new GridLayout(1, 2));
 
@@ -46,6 +55,10 @@ public class PanelPrincipal extends JPanel {
         });
     }
 
+    /**
+     * Dibuja el panel principal y sus componentes graficos
+     * @param g contexto grafico del dibujo
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

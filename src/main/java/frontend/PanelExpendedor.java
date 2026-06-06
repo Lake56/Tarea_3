@@ -5,6 +5,11 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.awt.event.MouseEvent;
 
+/**
+ * Representa la interfaz del expendedor
+ * Se encarga de los depositos, de entregar los productos
+ * el almacenamiento del vuelto y las compras realizads
+ */
 public class PanelExpendedor extends JPanel {
     private PanelDeposito depCoca;
     private PanelDeposito depSprite;
@@ -20,6 +25,10 @@ public class PanelExpendedor extends JPanel {
     private int numProductos;
     private static int contadorSerie = 1;
 
+    /**
+     * Se crea el expendedor con sus productos
+     * @param numProductos cantidad de productos por igual
+     */
     public PanelExpendedor(int numProductos) {
         this.numProductos = numProductos;
         this.monedasVuelto = new ArrayList<>();
@@ -61,7 +70,10 @@ public class PanelExpendedor extends JPanel {
         inicializarProductos();
     }
 
-    //carga con stock los depositos
+    /**
+     * Llena los depositos con la cantidad de productos y
+     * su respectivo numero de serie
+     */
     private void inicializarProductos() {
         for (int i = 0; i < numProductos; i++) {
             depCoca.addProducto(new Producto("Coca Cola", "n:" + contadorSerie++));
@@ -71,10 +83,21 @@ public class PanelExpendedor extends JPanel {
             depSuper8.addProducto(new Producto("Super8", "n:" + contadorSerie++));
         }
     }
+
+    /**
+     * Procesa los clicks al expendedor
+     * y si un deposito esta vacio se rellenara
+     * @param ejeX del click
+     * @param ejeY del click
+     */
     public void click(int ejeX, int ejeY) {
         rellenarVacios();
         repaint();
     }
+
+    /**
+     * Rellena con productos el deposito vacio
+     */
     private void rellenarVacios() {
         if (depCoca.estaVacio()) {
             for (int i =0; i <numProductos; i++)
@@ -97,7 +120,13 @@ public class PanelExpendedor extends JPanel {
                 depSuper8.addProducto(new Producto("Super8", "n:" + contadorSerie++));
         }
     }
-    //getter de depositos
+
+    /**
+     * Obtiene el deposito del producto
+     * @param nombreProducto solicitado
+     * @return deposito del producto o
+     * null si no existe el deposito
+     */
     public PanelDeposito getDeposito(String nombreProducto) {
         return switch (nombreProducto) {
             case "Coca Cola" -> depCoca;
@@ -109,7 +138,16 @@ public class PanelExpendedor extends JPanel {
         };
     }
 
-    //comprar producto
+    /**
+     * Realiza la compra de el producto con su moneda
+     * El producto se entrega en la bandeja de retiro
+     * y se genera el vuelto de la compra
+     * @param nombreProducto solicitado
+     * @param moneda utilizada por el comprador
+     * @param precio del producto
+     * @return true si la compra fue exitosa
+     * false en caso contrario
+     */
     public boolean comprar(String nombreProducto, Moneda moneda, int precio) {
         if (moneda==null) {
             return false;
@@ -149,16 +187,29 @@ public class PanelExpendedor extends JPanel {
         return true;
     }
 
+    /**
+     * retira el producto en la bandeja de entrada
+     * @return producto seleccionado o
+     * null si no existe el producto
+     */
     public Producto getProductoUnico() {
         return depProductoComprado.getProducto();
     }
 
+    /**
+     * Entrega la moneda de vuelto
+     * @return moneda del vuelto correspondiente o
+     * null si no quedan monedas
+     */
     public Moneda getVuelto() {
         if (monedasVuelto.isEmpty()) return null;
         return monedasVuelto.remove(0);
     }
 
-    //pintado
+    /**
+     * Dibuja el expendedor
+     * @param g contexto grafico del dibujo
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); // Java pinta el fondo azul
@@ -174,6 +225,11 @@ public class PanelExpendedor extends JPanel {
         g.drawString("Expendedor", 10, 22); // Título
     }
 
+    /**
+     * Dibuja los componentes hijos y las monedas disponibles
+     * en el deposito del vuelto.
+     * @param g contexto grafico del dibujo.
+     */
     @Override
     protected void paintChildren(Graphics g) {
         super.paintChildren(g);

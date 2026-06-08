@@ -12,4 +12,4 @@ Extension con interfaz grafica de la Tarea 1. En este proyecto se intenta poner 
 
 ## UML
 
-<img width="1215" height="2062" alt="Tarea3" src="https://github.com/user-attachments/assets/5db6a597-c661-4e98-b1af-56db8e61e6da" />
+<img width="2583" height="2155" alt="Tarea3" src="https://github.com/user-attachments/assets/158a3dc9-4f00-40a7-8daf-26a015632406" />
